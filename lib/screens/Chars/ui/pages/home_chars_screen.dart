@@ -16,7 +16,6 @@ class HomeCharsScreen extends StatefulWidget {
 class _HomeCharsScreen extends State<HomeCharsScreen> {
   final CharsBloc _newChars = CharsBloc();
   final CharRepository _charData = CharRepository();
-  final CharDetailsBloc _charDetail = CharDetailsBloc();
   @override
   void initState() {
     _newChars.add(GetCharsList());
@@ -44,7 +43,7 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
 
   Widget _buildListChars() {
     return Container(
-        margin: EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             Expanded(
@@ -84,7 +83,7 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
                 TextButton(
                     onPressed: _newChars.numberPage != 1
                         ? () => {
-                              _newChars.sendEvent.add(previusPage()),
+                              _newChars.sendEvent.add(PreviusPage()),
                               _newChars.add(GetCharsList()),
                               setState(() {})
                             }
@@ -111,7 +110,7 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
                 TextButton(
                     onPressed: _newChars.numberPage < _newChars.totalChars / 10
                         ? () => {
-                              _newChars.sendEvent.add(nextPage()),
+                              _newChars.sendEvent.add(NextPage()),
                               _newChars.add(GetCharsList()),
                               setState(() {})
                             }
@@ -135,7 +134,7 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
             margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
             height: 80,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
                 border: Border.all(color: Colors.blueAccent, width: 3)),
             child: InkWell(
               onTap: () {
@@ -153,28 +152,26 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
               },
               child: Card(
                 color: Colors.black,
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: <Widget>[
-                      Text(
-                        "Name: ${results?[index].name}",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'ST_ITALIC',
-                          fontSize: 16,
-                        ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      "Name: ${results?[index].name}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'ST_ITALIC',
+                        fontSize: 16,
                       ),
-                      Text(
-                        "Gender: ${results?[index].gender}",
-                        style: const TextStyle(
-                          color: Colors.yellow,
-                          fontFamily: 'ST_ITALIC',
-                          fontSize: 14,
-                        ),
+                    ),
+                    Text(
+                      "Gender: ${results?[index].gender}",
+                      style: const TextStyle(
+                        color: Colors.yellow,
+                        fontFamily: 'ST_ITALIC',
+                        fontSize: 14,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ));

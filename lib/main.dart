@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'ST_ITALIC',
             primarySwatch: Colors.yellow,
             backgroundColor: Colors.black,
-            primaryColorLight: Color.fromARGB(255, 0, 255, 21),
+            primaryColorLight: const Color.fromARGB(255, 0, 255, 21),
             disabledColor: Colors.red,
             unselectedWidgetColor: Colors.red),
         home: BottomNavigation());

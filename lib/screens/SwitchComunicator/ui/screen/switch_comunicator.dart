@@ -11,10 +11,6 @@ class SwitchNavigatorScreen extends StatefulWidget {
 class _SwitchNavigatorScreen extends State<SwitchNavigatorScreen> {
   bool _switchValue = false;
 
-  void _incrementCounter() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

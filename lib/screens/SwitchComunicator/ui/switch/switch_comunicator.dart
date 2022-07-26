@@ -21,25 +21,25 @@ class _SwitchComunicatorState extends State<SwitchComunicator> {
     return Container(
         width: 220,
         height: 320,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: widget.switchValue
-                  ? Color.fromARGB(100, 0, 255, 17)
-                  : Color.fromARGB(100, 255, 0, 0),
+                  ? const Color.fromARGB(100, 0, 255, 17)
+                  : const Color.fromARGB(100, 255, 0, 0),
               spreadRadius: 10,
               blurRadius: 10,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             )
           ],
           borderRadius: BorderRadius.circular(40),
           color: widget.switchValue
-              ? Color.fromARGB(255, 0, 255, 17)
-              : Color.fromARGB(255, 255, 0, 0),
+              ? const Color.fromARGB(255, 0, 255, 17)
+              : const Color.fromARGB(255, 255, 0, 0),
         ),
         child: InkWell(
-            splashColor: Color.fromARGB(255, 19, 19, 19),
+            splashColor: const Color.fromARGB(255, 19, 19, 19),
             child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.decelerate,
@@ -47,7 +47,7 @@ class _SwitchComunicatorState extends State<SwitchComunicator> {
                 height: 300,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.00),
-                    color: Color.fromARGB(255, 110, 110, 110)),
+                    color: const Color.fromARGB(255, 110, 110, 110)),
                 child: Stack(
                   children: [
                     Center(
@@ -71,14 +71,14 @@ class _SwitchComunicatorState extends State<SwitchComunicator> {
                                 boxShadow: [
                                   BoxShadow(
                                     color: widget.switchValue
-                                        ? Color.fromARGB(255, 0, 255, 17)
-                                        : Color.fromARGB(255, 255, 0, 0),
+                                        ? const Color.fromARGB(255, 0, 255, 17)
+                                        : const Color.fromARGB(255, 255, 0, 0),
                                     spreadRadius: 2,
                                     blurRadius: 20,
-                                    offset: Offset(0, 0),
+                                    offset: const Offset(0, 0),
                                   )
                                 ],
-                                color: Color.fromARGB(255, 19, 19, 19),
+                                color: const Color.fromARGB(255, 19, 19, 19),
                                 borderRadius: BorderRadius.circular(20.00)),
                             child: Center(
                                 child: Text(
@@ -86,8 +86,8 @@ class _SwitchComunicatorState extends State<SwitchComunicator> {
                               style: TextStyle(
                                   fontFamily: 'ST_ITALIC',
                                   color: widget.switchValue
-                                      ? Color.fromARGB(255, 0, 255, 17)
-                                      : Color.fromARGB(255, 255, 0, 0),
+                                      ? const Color.fromARGB(255, 0, 255, 17)
+                                      : const Color.fromARGB(255, 255, 0, 0),
                                   fontSize: 38,
                                   fontWeight: FontWeight.w100),
                             ))),

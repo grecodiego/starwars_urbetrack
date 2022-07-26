@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:starwars_urbetrack/screens/CharDetails/models/planet_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/starship_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/vehicles_model.dart';
@@ -40,14 +38,11 @@ class DetailsApiRepository {
   }
 
   Future getCharStarship(List<String> arrayStarShips) async {
-    late StarshipModel starshipDetails;
     List<StarshipModel> charStarshipList = [];
     try {
-      if (arrayStarShips != null) {
-        for (int i = 0; i < arrayStarShips.length; i++) {
-          StarshipModel charStarship = await fetchStarship(arrayStarShips[i]);
-          charStarshipList.add(charStarship);
-        }
+      for (int i = 0; i < arrayStarShips.length; i++) {
+        StarshipModel charStarship = await fetchStarship(arrayStarShips[i]);
+        charStarshipList.add(charStarship);
       }
     } catch (error) {
       throw (error);
@@ -56,7 +51,6 @@ class DetailsApiRepository {
   }
 
   Future getCharVehicle(List<String> arrayVehicles) async {
-    late VehiclesModel vehicleDetails;
     List<VehiclesModel> charVehicleList = [];
     try {
       if (arrayVehicles != null) {

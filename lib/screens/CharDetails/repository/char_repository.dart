@@ -3,7 +3,7 @@ import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
 class CharRepository {
   late Results charData;
 
-  static CharRepository _instance = CharRepository._internal();
+  static final CharRepository _instance = CharRepository._internal();
 
   CharRepository._internal();
 

@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
-
 import 'dart:async';
-
 import 'package:starwars_urbetrack/screens/Chars/repository/api_repository.dart';
 part 'chars_event.dart';
 part 'chars_state.dart';
@@ -40,7 +38,7 @@ class CharsBloc extends Bloc<CharsEvent, CharsState> {
   }
 
   void _onEvent(CharsBloc event) {
-    if (event is nextPage) {
+    if (event is NextPage) {
       numberPage++;
     } else {
       if (numberPage != 1) {
@@ -54,6 +52,6 @@ class CharsBloc extends Bloc<CharsEvent, CharsState> {
   final ApiRepository _apiRepository = ApiRepository();
 }
 
-class nextPage extends CharsBloc {}
+class NextPage extends CharsBloc {}
 
-class previusPage extends CharsBloc {}
+class PreviusPage extends CharsBloc {}

@@ -5,7 +5,6 @@ import 'package:starwars_urbetrack/screens/SwitchComunicator/ui/screen/switch_co
 class BottomNavigation extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _BottomNavigation();
   }
 }
@@ -13,7 +12,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigation extends State<BottomNavigation> {
   int indexTap = 0;
   final List<Widget> widgetsChildren = [
-    HomeCharsScreen(),
+    const HomeCharsScreen(),
     const SwitchNavigatorScreen(),
   ];
 
@@ -25,18 +24,16 @@ class _BottomNavigation extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-
     return Scaffold(
       body: widgetsChildren[indexTap],
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           canvasColor: Colors.black,
-          primaryColor: Color.fromARGB(255, 0, 255, 21),
+          primaryColor: const Color.fromARGB(255, 0, 255, 21),
         ),
         child: BottomNavigationBar(
             unselectedItemColor: Colors.red,
-            selectedItemColor: Color.fromARGB(255, 0, 255, 21),
+            selectedItemColor: const Color.fromARGB(255, 0, 255, 21),
             onTap: onTapTapped,
             currentIndex: indexTap,
             items: const [

@@ -8,3 +8,7 @@ abstract class CharsEvent extends Equatable {
 }
 
 class GetCharsList extends CharsEvent {}
+
+class NextPage extends CharsEvent {}
+
+class PreviusPage extends CharsEvent {}

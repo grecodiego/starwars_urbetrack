@@ -6,7 +6,7 @@ part 'package:starwars_urbetrack/screens/CharDetails/bloc/char_details_event.dar
 part 'package:starwars_urbetrack/screens/CharDetails/bloc/char_details_state.dart';
 
 class CharDetailsBloc extends Bloc<CharDetailsEvent, CharDetailsState> {
-  CharDetailsBloc() : super(CharDetailsInitialState()) {}
+  CharDetailsBloc() : super(CharDetailsInitialState());
 
   final StreamController<int> _output = StreamController();
 

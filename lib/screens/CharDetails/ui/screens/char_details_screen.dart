@@ -1,14 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/repository/api_repository.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
-import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_notifier.dart';
+import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_bloc.dart';
 
 class CharDetailsScreen extends StatefulWidget {
-  Results charData;
+  final Results charData;
 
-  CharDetailsScreen({Key? key, required this.charData}) : super(key: key);
+  const CharDetailsScreen({Key? key, required this.charData}) : super(key: key);
 
   @override
   State<CharDetailsScreen> createState() => _CharDetailsScreenState();
@@ -159,6 +158,7 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
 }
 
 Widget _buildLoading() => const Center(child: CircularProgressIndicator());
+
 Widget _informationText(title, data) {
   return Container(
     margin: const EdgeInsets.only(bottom: 20),
@@ -182,5 +182,3 @@ Widget _informationText(title, data) {
     ]),
   );
 }
-
-class ResponseModel {}

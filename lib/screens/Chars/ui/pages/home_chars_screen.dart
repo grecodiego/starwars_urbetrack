@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:starwars_urbetrack/screens/CharDetails/bloc/char_details_bloc.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/repository/char_repository.dart';
 import 'package:starwars_urbetrack/screens/Chars/bloc/chars_bloc.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
@@ -14,13 +15,7 @@ class HomeCharsScreen extends StatefulWidget {
 }
 
 class _HomeCharsScreen extends State<HomeCharsScreen> {
-  final CharsBloc _newChars = CharsBloc();
   final CharRepository _charData = CharRepository();
-  @override
-  void initState() {
-    _newChars.add(GetCharsList());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,33 +47,30 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
         child: Column(
           children: [
             Expanded(
-              child: BlocProvider(
-                create: (context) => _newChars,
-                child: BlocListener<CharsBloc, CharsState>(
-                  listener: (context, state) {
-                    if (state is CharsStateError) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(state.message!),
-                        ),
-                      );
+              child: BlocListener<CharsBloc, CharsState>(
+                listener: (context, state) {
+                  if (state is CharsStateError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message!),
+                      ),
+                    );
+                  }
+                },
+                child: BlocBuilder<CharsBloc, CharsState>(
+                  builder: (context, state) {
+                    if (state is CharsInitialState) {
+                      return _buildLoading();
+                    } else if (state is CharsStateLoading) {
+                      return _buildLoading();
+                    } else if (state is CharsStateLoaded) {
+                      return _buildCard(context, state.results);
+                    } else if (state is CharsStateError) {
+                      return Container();
+                    } else {
+                      return Container();
                     }
                   },
-                  child: BlocBuilder<CharsBloc, CharsState>(
-                    builder: (context, state) {
-                      if (state is CharsInitialState) {
-                        return _buildLoading();
-                      } else if (state is CharsStateLoading) {
-                        return _buildLoading();
-                      } else if (state is CharsStateLoaded) {
-                        return _buildCard(context, state.results);
-                      } else if (state is CharsStateError) {
-                        return Container();
-                      } else {
-                        return Container();
-                      }
-                    },
-                  ),
                 ),
               ),
             ),
@@ -86,44 +78,52 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 TextButton(
-                    onPressed: _newChars.numberPage != 1
-                        ? () => {
-                              _newChars.sendEvent.add(PreviusPage()),
-                              _newChars.add(GetCharsList()),
-                              setState(() {})
-                            }
-                        : null,
-                    child: const Text(
+                    onPressed:
+                        BlocProvider.of<CharsBloc>(context).numberPage != 1
+                            ? () => {
+                                  BlocProvider.of<CharsBloc>(context)
+                                      .add(PreviusPage()),
+                                  setState(() {})
+                                }
+                            : null,
+                    child: Text(
                       'Back',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 0, 255, 21), fontSize: 20),
+                          color:
+                              BlocProvider.of<CharsBloc>(context).numberPage !=
+                                      1
+                                  ? const Color.fromARGB(255, 0, 255, 21)
+                                  : const Color.fromARGB(0, 0, 255, 21),
+                          fontSize: 20),
                     )),
-                StreamBuilder<int>(
-                  stream: _newChars.pageStream,
-                  initialData: 1,
-                  builder: (context, snapshot) {
-                    return Text(
-                      'Page ${snapshot.data}',
-                      style: const TextStyle(
-                          color: Colors.yellow,
-                          fontFamily: 'ST_ITALIC_OUTBORDER',
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold),
-                    );
-                  },
+                Text(
+                  'Page ${BlocProvider.of<CharsBloc>(context).numberPage}',
+                  style: const TextStyle(
+                      color: Colors.yellow,
+                      fontFamily: 'ST_ITALIC_OUTBORDER',
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold),
                 ),
                 TextButton(
-                    onPressed: _newChars.numberPage < _newChars.totalChars / 10
+                    onPressed: BlocProvider.of<CharsBloc>(context).numberPage <
+                            BlocProvider.of<CharsBloc>(context).totalChars / 10
                         ? () => {
-                              _newChars.sendEvent.add(NextPage()),
-                              _newChars.add(GetCharsList()),
+                              BlocProvider.of<CharsBloc>(context)
+                                  .add(NextPage()),
                               setState(() {})
                             }
                         : null,
-                    child: const Text(
+                    child: Text(
                       'Next',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 0, 255, 21), fontSize: 20),
+                          color:
+                              BlocProvider.of<CharsBloc>(context).numberPage <
+                                      BlocProvider.of<CharsBloc>(context)
+                                              .totalChars /
+                                          10
+                                  ? const Color.fromARGB(255, 0, 255, 21)
+                                  : const Color.fromARGB(0, 0, 255, 21),
+                          fontSize: 20),
                     ))
               ],
             )
@@ -154,7 +154,7 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
                 );
               },
               child: Card(
-                color: Color.fromARGB(92, 0, 0, 0),
+                color: const Color.fromARGB(92, 0, 0, 0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[

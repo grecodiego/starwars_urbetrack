@@ -24,7 +24,7 @@ class DetailsApiRepository {
         charPlanet = await _providerPlanet.fetchPlanet(uriPlanet);
       }
     } catch (error) {
-      throw (error);
+      rethrow;
     }
     return charPlanet;
   }
@@ -38,7 +38,7 @@ class DetailsApiRepository {
         charStarshipList.add(charStarship);
       }
     } catch (error) {
-      throw (error);
+      rethrow;
     }
     return charStarshipList;
   }
@@ -54,7 +54,7 @@ class DetailsApiRepository {
         }
       }
     } catch (error) {
-      throw (error);
+      rethrow;
     }
     return charVehicleList;
   }
@@ -69,26 +69,8 @@ class DetailsApiRepository {
         return responseReport;
       }
     } catch (error) {
-      throw (error);
+      rethrow;
     }
     return responseReport;
   }
 }
-
-  /*  Future<PlanetModel> fetchPlanet(String planetURL) {
-    return _providerPlanet.fetchPlanet(planetURL);
-  }
-
-  Future<StarshipModel> fetchStarship(String starshipURL) {
-    return _providerStarship.fetchStarship(starshipURL);
-  }
-
-  Future<VehiclesModel> fetchVehicle(String starshipURL) {
-    return _providerVehicle.fetchVehicle(starshipURL);
-  }
- */
-
-
-/*   Future fetchReport(String charName) {
-    return _providerVehicle.fetchVehicle(charName);
-  } */

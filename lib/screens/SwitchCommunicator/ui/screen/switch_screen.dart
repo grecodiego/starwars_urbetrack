@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_notifier.dart';
+import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_bloc.dart';
 import 'package:starwars_urbetrack/screens/SwitchCommunicator/ui/switch/switch_widget.dart';
 
 import 'package:provider/provider.dart';

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:starwars_urbetrack/screens/Chars/bloc/chars_bloc.dart';
 import 'package:starwars_urbetrack/screens/Chars/ui/pages/home_chars_screen.dart';
 import 'package:starwars_urbetrack/screens/SwitchCommunicator/ui/screen/switch_screen.dart';
 
@@ -23,6 +25,11 @@ class _BottomNavigation extends State<BottomNavigation> {
   }
 
   @override
+  void initState() {
+    BlocProvider.of<CharsBloc>(context).add(GetCharsList());
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: widgetsChildren[indexTap],

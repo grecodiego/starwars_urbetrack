@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class SwitchComunicator extends StatefulWidget {
-  SwitchComunicator({
+class SwitchWidget extends StatefulWidget {
+  SwitchWidget({
     Key? key,
-    this.switchValue = false,
+    required this.switchValue,
     required this.onChanged,
   }) : super(key: key);
   bool switchValue;
-  final ValueChanged<bool> onChanged;
+  Function onChanged;
   @override
-  State<SwitchComunicator> createState() => _SwitchComunicatorState();
+  State<SwitchWidget> createState() => _SwitchWidget();
 }
 
-class _SwitchComunicatorState extends State<SwitchComunicator> {
+class _SwitchWidget extends State<SwitchWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -96,10 +93,7 @@ class _SwitchComunicatorState extends State<SwitchComunicator> {
                   ],
                 )),
             onTap: () {
-              setState(() {
-                widget.switchValue = !widget.switchValue;
-                widget.onChanged;
-              });
+              widget.onChanged(widget.switchValue);
             }));
   }
 }

@@ -14,6 +14,7 @@ dependencies:
   equatable: ^2.0.3
   dio: ^4.0.4
   cupertino_icons: ^1.0.2
+  provider: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -32,3 +33,5 @@ flutter:
     - family: LATO
       fonts:
         - asset: lib/fonts/Lato-Regular.ttf
+  assets:
+    - lib/assets/images/wallpaper2.jpeg

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:starwars_urbetrack/screens/SwitchComunicator/ui/switch/switch_comunicator.dart';
+import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_notifier.dart';
+import 'package:starwars_urbetrack/screens/SwitchCommunicator/ui/switch/switch_widget.dart';
 
-class SwitchNavigatorScreen extends StatefulWidget {
-  const SwitchNavigatorScreen({Key? key}) : super(key: key);
+import 'package:provider/provider.dart';
+
+class SwitchScreen extends StatefulWidget {
+  const SwitchScreen({Key? key}) : super(key: key);
 
   @override
-  State<SwitchNavigatorScreen> createState() => _SwitchNavigatorScreen();
+  State<SwitchScreen> createState() => _SwitchScreen();
 }
 
-class _SwitchNavigatorScreen extends State<SwitchNavigatorScreen> {
-  bool _switchValue = false;
-
+class _SwitchScreen extends State<SwitchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +32,10 @@ class _SwitchNavigatorScreen extends State<SwitchNavigatorScreen> {
               height: 50,
             ),
             Center(
-                child: SwitchComunicator(
-                    switchValue: false,
-                    onChanged: (bool valueIn) =>
-                        {_switchValue = valueIn, setState(() {})})),
+                child: SwitchWidget(
+                    switchValue: Provider.of<SwitchModel>(context).switchValue,
+                    onChanged: Provider.of<SwitchModel>(context, listen: false)
+                        .changeValue))
           ],
         ));
   }

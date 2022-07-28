@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/planet_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/starship_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/vehicles_model.dart';
+import 'package:starwars_urbetrack/screens/CharDetails/repository/report_api_service.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/repository/starships_api_provider.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/repository/planets_api_provider.dart';
@@ -10,30 +12,20 @@ class DetailsApiRepository {
   final _providerPlanet = PlanetApiProvider();
   final _providerStarship = StarshipApiProvider();
   final _providerVehicle = VehicleApiProvider();
+  final _reportService = ReportApiService();
 
-  Future<PlanetModel> fetchPlanet(String planetURL) {
-    return _providerPlanet.fetchPlanet(planetURL);
-  }
-
-  Future<StarshipModel> fetchStarship(String starshipURL) {
-    return _providerStarship.fetchStarship(starshipURL);
-  }
-
-  Future<VehiclesModel> fetchVehicle(String starshipURL) {
-    return _providerVehicle.fetchVehicle(starshipURL);
-  }
+// ----------------------- GET -----------------------
 
   Future GetCharWorld(Results charData) async {
     String uriPlanet = charData.homeworld;
     late PlanetModel charPlanet;
     try {
       if (charData.homeworld != null) {
-        charPlanet = await fetchPlanet(uriPlanet);
+        charPlanet = await _providerPlanet.fetchPlanet(uriPlanet);
       }
     } catch (error) {
       throw (error);
     }
-
     return charPlanet;
   }
 
@@ -41,7 +33,8 @@ class DetailsApiRepository {
     List<StarshipModel> charStarshipList = [];
     try {
       for (int i = 0; i < arrayStarShips.length; i++) {
-        StarshipModel charStarship = await fetchStarship(arrayStarShips[i]);
+        StarshipModel charStarship =
+            await _providerStarship.fetchStarship(arrayStarShips[i]);
         charStarshipList.add(charStarship);
       }
     } catch (error) {
@@ -55,7 +48,8 @@ class DetailsApiRepository {
     try {
       if (arrayVehicles != null) {
         for (int i = 0; i < arrayVehicles.length; i++) {
-          VehiclesModel charVehicle = await fetchVehicle(arrayVehicles[i]);
+          VehiclesModel charVehicle =
+              await _providerVehicle.fetchVehicle(arrayVehicles[i]);
           charVehicleList.add(charVehicle);
         }
       }
@@ -64,4 +58,37 @@ class DetailsApiRepository {
     }
     return charVehicleList;
   }
+
+// ----------------------- POST -----------------------
+
+  Future reportChar(String charName) async {
+    dynamic responseReport;
+    try {
+      if (charName != '') {
+        var responseReport = await _reportService.fetchPost(charName);
+        return responseReport;
+      }
+    } catch (error) {
+      throw (error);
+    }
+    return responseReport;
+  }
 }
+
+  /*  Future<PlanetModel> fetchPlanet(String planetURL) {
+    return _providerPlanet.fetchPlanet(planetURL);
+  }
+
+  Future<StarshipModel> fetchStarship(String starshipURL) {
+    return _providerStarship.fetchStarship(starshipURL);
+  }
+
+  Future<VehiclesModel> fetchVehicle(String starshipURL) {
+    return _providerVehicle.fetchVehicle(starshipURL);
+  }
+ */
+
+
+/*   Future fetchReport(String charName) {
+    return _providerVehicle.fetchVehicle(charName);
+  } */

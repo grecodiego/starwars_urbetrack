@@ -25,20 +25,25 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        title: const Text(
-          'Star Wars',
-          style: TextStyle(
-              color: Colors.yellow,
-              fontFamily: 'ST_ITALIC_OUTBORDER',
-              fontSize: 40,
-              fontWeight: FontWeight.bold),
+        appBar: AppBar(
+          title: const Text(
+            'Star Wars',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.yellow,
+                fontFamily: 'ST_ITALIC_OUTBORDER',
+                fontSize: 40,
+                fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
         ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-      ),
-      body: _buildListChars(),
-    );
+        body: Container(
+          decoration: (const BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage("lib/assets/images/wallpaper2.jpeg")))),
+          child: _buildListChars(),
+        ));
   }
 
   Widget _buildListChars() {
@@ -140,8 +145,6 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
               onTap: () {
                 setState(() {
                   _charData.setCharData(results![index]);
-                  //      _charDetail.add(GetCharDetails());
-                  //  setState(() {});
                 });
                 Navigator.push(
                   context,
@@ -151,7 +154,7 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
                 );
               },
               child: Card(
-                color: Colors.black,
+                color: Color.fromARGB(92, 0, 0, 0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:starwars_urbetrack/screens/Chars/ui/pages/home_chars_screen.dart';
-import 'package:starwars_urbetrack/screens/SwitchComunicator/ui/screen/switch_comunicator.dart';
+import 'package:starwars_urbetrack/screens/SwitchCommunicator/ui/screen/switch_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class _BottomNavigation extends State<BottomNavigation> {
   int indexTap = 0;
   final List<Widget> widgetsChildren = [
     const HomeCharsScreen(),
-    const SwitchNavigatorScreen(),
+    const SwitchScreen(),
   ];
 
   void onTapTapped(int index) {
@@ -40,13 +40,11 @@ class _BottomNavigation extends State<BottomNavigation> {
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.home,
-                    //    color: Color.fromARGB(255, 0, 255, 21),
                   ),
                   label: ""),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.switch_access_shortcut,
-                    //   color: Color.fromARGB(255, 0, 255, 21),
                   ),
                   label: ""),
             ]),

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
 import 'dart:async';
+
 import 'package:starwars_urbetrack/screens/Chars/repository/api_repository.dart';
 part 'chars_event.dart';
 part 'chars_state.dart';

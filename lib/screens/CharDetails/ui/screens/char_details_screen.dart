@@ -38,7 +38,6 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text(
             'DETAILS',
             textAlign: TextAlign.center,
@@ -48,6 +47,8 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                 fontSize: 40,
                 fontWeight: FontWeight.bold),
           ),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).colorScheme.background,
         ),
         body: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),

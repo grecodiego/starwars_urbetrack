@@ -21,6 +21,7 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: const Text(
             'Star Wars',
             textAlign: TextAlign.center,

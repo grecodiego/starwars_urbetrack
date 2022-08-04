@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
-import 'package:starwars_urbetrack/screens/Chars/repository/api_repository.dart';
+import 'package:starwars_urbetrack/screens/Chars/repository/chars_repository.dart';
 part 'chars_event.dart';
 part 'chars_state.dart';
 
 class CharsBloc extends Bloc<CharsEvent, CharsState> {
-  final ApiRepository _apiRepository = ApiRepository();
+  final CharsRepository _apiRepository = CharsRepository();
   int numberPage = 1;
   int totalChars = 40;
 
@@ -14,7 +14,7 @@ class CharsBloc extends Bloc<CharsEvent, CharsState> {
     getChars() async {
       try {
         emit(CharsStateLoading());
-        final charsList = await _apiRepository.fetchCharsList(numberPage);
+        final charsList = await _apiRepository.getCharsList(numberPage);
         totalChars = charsList.count;
         emit(CharsStateLoaded(charsList.results));
         if (charsList.error != null) {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:starwars_urbetrack/screens/CharDetails/models/char_details_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/planet_model.dart';
-import 'package:starwars_urbetrack/screens/CharDetails/models/starship_model.dart';
-import 'package:starwars_urbetrack/screens/CharDetails/models/vehicles_model.dart';
+
 import 'dart:async';
 
 import 'package:starwars_urbetrack/screens/CharDetails/repository/api_repository.dart';
@@ -41,10 +41,4 @@ class CharDetailsBloc extends Bloc<CharDetailsEvent, CharDetailsState> {
       getDetails(event.charData);
     });
   }
-}
-
-class CharDetails {
-  String charWorldName = '';
-  List<StarshipModel> charStarships = [];
-  List<VehiclesModel> charVehicles = [];
 }

@@ -74,3 +74,5 @@ class DetailsApiRepository {
     return responseReport;
   }
 }
+
+class NetworkError extends Error {}

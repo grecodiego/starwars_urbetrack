@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:starwars_urbetrack/bottom_navigation.dart';
+import 'package:starwars_urbetrack/screens/CharDetails/bloc/char_details_bloc.dart';
 import 'package:starwars_urbetrack/screens/Chars/bloc/chars_bloc.dart';
 import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_communicator_bloc.dart';
 
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SwitchCommunicatorBloc(),
+          ),
+          BlocProvider(
+            create: (context) => CharDetailsBloc(),
           )
         ],
         child: MaterialApp(

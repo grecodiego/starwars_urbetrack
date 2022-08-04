@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:starwars_urbetrack/screens/CharDetails/bloc/char_details_bloc.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/repository/api_repository.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
 import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_communicator_bloc.dart';
@@ -35,6 +36,8 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<CharDetailsBloc>(context)
+        .add(GetCharDetails(widget.charData));
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
@@ -65,52 +68,40 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                   _informationText('Hair color', widget.charData.hairColor),
                   _informationText('Height', widget.charData.height),
                   _informationText('Weight', widget.charData.mass),
-                  FutureBuilder(
-                    future: characterDetailsRepository.GetCharWorld(
-                        widget.charData),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return _informationText(
-                            'Birthworld', snapshot.data.name);
-                      } else {
-                        return _buildLoading();
-                      }
-                    },
-                  ),
-                  FutureBuilder(
-                    future: characterDetailsRepository
-                        .getCharStarship(widget.charData.starships),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return _informationText('Starship N${index + 1}',
-                                  snapshot.data[index].name);
-                            });
-                      } else {
-                        return _buildLoading();
-                      }
-                    },
-                  ),
-                  FutureBuilder(
-                    future: characterDetailsRepository
-                        .getCharVehicle(widget.charData.vehicles),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return _informationText('Vehicle N${index + 1}',
-                                  snapshot.data[index].name);
-                            });
-                      } else {
-                        return _buildLoading();
-                      }
-                    },
-                  ),
+                  BlocBuilder<CharDetailsBloc, CharDetailsState>(
+                      builder: (context, state) {
+                    if (state is CharDetailsInitialState) {
+                      return _buildLoading();
+                    } else if (state is CharDetailsStateLoading) {
+                      return _buildLoading();
+                    } else if (state is CharDetailsStateLoaded) {
+                      return Column(
+                        children: [
+                          _informationText(
+                              'Birthworld', state.charDetails?.charWorldName),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: state.charDetails?.charVehicles.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return _informationText('Vehicle N${index + 1}',
+                                    state.charDetails?.charWorldName[index]);
+                              }),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  state.charDetails?.charStarships.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return _informationText('Vehicle N${index + 1}',
+                                    state.charDetails?.charStarships[index]);
+                              }),
+                        ],
+                      );
+                    } else if (state is CharDetailsStateError) {
+                      return Container();
+                    } else {
+                      return Container();
+                    }
+                  })
                 ]),
                 const SizedBox(
                   height: 20,

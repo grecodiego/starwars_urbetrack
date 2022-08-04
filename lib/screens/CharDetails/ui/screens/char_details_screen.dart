@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/bloc/char_details_bloc.dart';
-import 'package:starwars_urbetrack/screens/CharDetails/repository/api_repository.dart';
+import 'package:starwars_urbetrack/screens/CharDetails/repository/char_details_repositories.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
 import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_communicator_bloc.dart';
 
@@ -17,6 +17,7 @@ class CharDetailsScreen extends StatefulWidget {
 class _CharDetailsScreenState extends State<CharDetailsScreen> {
   final DetailsApiRepository characterDetailsRepository =
       DetailsApiRepository();
+  final ReportRepository reportRepository = ReportRepository();
 
   void initialState() {
     super.initState();
@@ -122,10 +123,8 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                         ElevatedButton(
                           onPressed: state.switchValue == true
                               ? () async {
-                                  var responseReport =
-                                      await characterDetailsRepository
-                                          .reportChar(widget.charData.name);
-
+                                  var responseReport = await reportRepository
+                                      .sendReport(widget.charData.name);
                                   activeSnackbar(responseReport);
                                 }
                               : () {

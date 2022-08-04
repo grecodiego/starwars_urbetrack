@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_communicator_bloc.dart';
 import 'package:starwars_urbetrack/screens/SwitchCommunicator/ui/switch/switch_widget.dart';
 
-import 'package:provider/provider.dart';
-
-class SwitchScreen extends StatefulWidget {
+class SwitchScreen extends StatelessWidget {
   const SwitchScreen({Key? key}) : super(key: key);
 
-  @override
-  State<SwitchScreen> createState() => _SwitchScreen();
-}
-
-class _SwitchScreen extends State<SwitchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,11 +25,17 @@ class _SwitchScreen extends State<SwitchScreen> {
             const SizedBox(
               height: 50,
             ),
-            Center(
-                child: SwitchWidget(
-                    switchValue: Provider.of<SwitchModel>(context).switchValue,
-                    onChanged: Provider.of<SwitchModel>(context, listen: false)
-                        .changeValue))
+            Center(child:
+                BlocBuilder<SwitchCommunicatorBloc, SwitchCommunicatorState>(
+              builder: (context, state) {
+                return SwitchWidget(
+                    switchValue: state.switchValue,
+                    onChanged: () => {
+                          BlocProvider.of<SwitchCommunicatorBloc>(context)
+                              .add(ChangeValue()),
+                        });
+              },
+            ))
           ],
         ));
   }

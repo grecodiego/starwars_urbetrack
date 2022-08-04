@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/repository/api_repository.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
-import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_bloc.dart';
+import 'package:starwars_urbetrack/screens/SwitchCommunicator/bloc/switch_communicator_bloc.dart';
 
 class CharDetailsScreen extends StatefulWidget {
   final Results charData;
@@ -115,43 +115,51 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Provider.of<SwitchModel>(context).switchValue == true
-                    ? const SizedBox(height: 20)
-                    : const Text(
-                        'Please switch ON the communicator before reporting!',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: Provider.of<SwitchModel>(context).switchValue ==
-                          true
-                      ? () async {
-                          var responseReport = await characterDetailsRepository
-                              .reportChar(widget.charData.name);
+                BlocBuilder<SwitchCommunicatorBloc, SwitchCommunicatorState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        state.switchValue == true
+                            ? const SizedBox(height: 20)
+                            : const Text(
+                                'Please switch ON the communicator before reporting!',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: state.switchValue == true
+                              ? () async {
+                                  var responseReport =
+                                      await characterDetailsRepository
+                                          .reportChar(widget.charData.name);
 
-                          activeSnackbar(responseReport);
-                        }
-                      : () {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                                  content: Text(
-                            'Please switch ON the communicator before reporting!',
-                            style: TextStyle(
-                                color: Colors.yellow,
-                                fontFamily: 'ST_ITALIC_OUTBORDER',
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          )));
-                        },
-                  child: const Text('REPORT INVADER'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
+                                  activeSnackbar(responseReport);
+                                }
+                              : () {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                          content: Text(
+                                    'Please switch ON the communicator before reporting!',
+                                    style: TextStyle(
+                                        color: Colors.yellow,
+                                        fontFamily: 'ST_ITALIC_OUTBORDER',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold),
+                                  )));
+                                },
+                          child: const Text('REPORT INVADER'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Go back'),
+                        ),
+                      ],
+                    );
                   },
-                  child: const Text('Go back'),
                 ),
               ],
             )));

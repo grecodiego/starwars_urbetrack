@@ -84,16 +84,20 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                               shrinkWrap: true,
                               itemCount: state.charDetails?.charVehicles.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return _informationText('Vehicle N${index + 1}',
-                                    state.charDetails?.charWorldName[index]);
+                                return _informationText(
+                                    'Vehicle N${index + 1}',
+                                    state
+                                        .charDetails?.charVehicles[index].name);
                               }),
                           ListView.builder(
                               shrinkWrap: true,
                               itemCount:
                                   state.charDetails?.charStarships.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return _informationText('Vehicle N${index + 1}',
-                                    state.charDetails?.charStarships[index]);
+                                return _informationText(
+                                    'Starship N${index + 1}',
+                                    state.charDetails?.charStarships[index]
+                                        .name);
                               }),
                         ],
                       );

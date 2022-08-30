@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SwitchWidget extends StatefulWidget {
+class SwitchWidget extends StatelessWidget {
   SwitchWidget({
     Key? key,
     required this.switchValue,
@@ -8,11 +8,7 @@ class SwitchWidget extends StatefulWidget {
   }) : super(key: key);
   bool switchValue;
   Function onChanged;
-  @override
-  State<SwitchWidget> createState() => _SwitchWidget();
-}
 
-class _SwitchWidget extends State<SwitchWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +18,7 @@ class _SwitchWidget extends State<SwitchWidget> {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: widget.switchValue
+              color: switchValue
                   ? const Color.fromARGB(100, 0, 255, 17)
                   : const Color.fromARGB(100, 255, 0, 0),
               spreadRadius: 10,
@@ -31,7 +27,7 @@ class _SwitchWidget extends State<SwitchWidget> {
             )
           ],
           borderRadius: BorderRadius.circular(40),
-          color: widget.switchValue
+          color: switchValue
               ? const Color.fromARGB(255, 0, 255, 17)
               : const Color.fromARGB(255, 255, 0, 0),
         ),
@@ -56,7 +52,7 @@ class _SwitchWidget extends State<SwitchWidget> {
                     ),
                     AnimatedAlign(
                       duration: const Duration(milliseconds: 300),
-                      alignment: widget.switchValue
+                      alignment: switchValue
                           ? Alignment.topCenter
                           : Alignment.bottomCenter,
                       child: Padding(
@@ -67,7 +63,7 @@ class _SwitchWidget extends State<SwitchWidget> {
                             decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                    color: widget.switchValue
+                                    color: switchValue
                                         ? const Color.fromARGB(255, 0, 255, 17)
                                         : const Color.fromARGB(255, 255, 0, 0),
                                     spreadRadius: 2,
@@ -82,7 +78,7 @@ class _SwitchWidget extends State<SwitchWidget> {
                               'LINK',
                               style: TextStyle(
                                   fontFamily: 'ST_ITALIC',
-                                  color: widget.switchValue
+                                  color: switchValue
                                       ? const Color.fromARGB(255, 0, 255, 17)
                                       : const Color.fromARGB(255, 255, 0, 0),
                                   fontSize: 38,
@@ -93,7 +89,7 @@ class _SwitchWidget extends State<SwitchWidget> {
                   ],
                 )),
             onTap: () {
-              widget.onChanged(widget.switchValue);
+              onChanged();
             }));
   }
 }

@@ -5,6 +5,8 @@ import 'package:starwars_urbetrack/screens/Chars/ui/pages/home_chars_screen.dart
 import 'package:starwars_urbetrack/screens/SwitchCommunicator/ui/screen/switch_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
+  const BottomNavigation({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _BottomNavigation();

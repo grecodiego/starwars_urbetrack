@@ -1,10 +1,11 @@
 part of 'char_details_bloc.dart';
 
-abstract class CharDetailsEvent extends Equatable {
+abstract class CharDetailsEvent {
   const CharDetailsEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
-class GetCharDetails extends CharDetailsEvent {}
+class GetCharDetails extends CharDetailsEvent {
+  Results charData;
+
+  GetCharDetails(this.charData);
+}

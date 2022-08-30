@@ -1,22 +1,17 @@
 part of 'char_details_bloc.dart';
 
-abstract class CharDetailsState extends Equatable {
-  const CharDetailsState();
-
-  @override
-  List<Object?> get props => [];
-}
+abstract class CharDetailsState {}
 
 class CharDetailsInitialState extends CharDetailsState {}
 
 class CharDetailsStateLoading extends CharDetailsState {}
 
 class CharDetailsStateLoaded extends CharDetailsState {
-  final List<StarshipModel>? charStarshipList;
-  const CharDetailsStateLoaded(this.charStarshipList);
+  CharDetails? charDetails;
+  CharDetailsStateLoaded(this.charDetails);
 }
 
 class CharDetailsStateError extends CharDetailsState {
   final String? message;
-  const CharDetailsStateError(this.message);
+  CharDetailsStateError(String this.message) : super();
 }

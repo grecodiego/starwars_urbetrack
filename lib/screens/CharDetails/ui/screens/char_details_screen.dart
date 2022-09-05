@@ -71,9 +71,7 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                   _informationText('Weight', widget.charData.mass),
                   BlocBuilder<CharDetailsBloc, CharDetailsState>(
                       builder: (context, state) {
-                    if (state is CharDetailsInitialState) {
-                      return _buildLoading();
-                    } else if (state is CharDetailsStateLoading) {
+                    if (state is CharDetailsStateLoading) {
                       return _buildLoading();
                     } else if (state is CharDetailsStateLoaded) {
                       return Column(
@@ -102,9 +100,13 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                         ],
                       );
                     } else if (state is CharDetailsStateError) {
-                      return Container();
+                      return Center(
+                        child: Text('${state.message}'),
+                      );
                     } else {
-                      return Container();
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
                     }
                   })
                 ]),

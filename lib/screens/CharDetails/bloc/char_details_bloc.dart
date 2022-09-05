@@ -11,7 +11,7 @@ class CharDetailsBloc extends Bloc<CharDetailsEvent, CharDetailsState> {
   final DetailsApiRepository _apiRepository = DetailsApiRepository();
   CharDetails charDetails = CharDetails();
 
-  CharDetailsBloc() : super(CharDetailsInitialState()) {
+  CharDetailsBloc() : super(CharDetailsStateLoading()) {
     getDetails(Results charData) async {
       emit(CharDetailsStateLoading());
       try {
@@ -28,9 +28,8 @@ class CharDetailsBloc extends Bloc<CharDetailsEvent, CharDetailsState> {
               await _apiRepository.getCharVehicles(charData.vehicles);
         }
         emit(CharDetailsStateLoaded(charDetails));
-      } on NetworkError {
-        emit(CharDetailsStateError(
-            "Failed to fetch data. is your device online?"));
+      } catch (e) {
+        emit(CharDetailsStateError('$e'));
       }
     }
 

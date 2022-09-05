@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/repository/char_repository.dart';
@@ -60,16 +59,34 @@ class _HomeCharsScreen extends State<HomeCharsScreen> {
                 },
                 child: BlocBuilder<CharsBloc, CharsState>(
                   builder: (context, state) {
-                    if (state is CharsInitialState) {
-                      return _buildLoading();
+                    if (state is CharsStateError) {
+                      return Center(
+                          child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 200,
+                          ),
+                          Text(
+                            '${state.message}',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              BlocProvider.of<CharsBloc>(context)
+                                  .add(GetCharsList());
+                            },
+                            child: const Text('Reload'),
+                          ),
+                        ],
+                      ));
                     } else if (state is CharsStateLoading) {
                       return _buildLoading();
                     } else if (state is CharsStateLoaded) {
                       return _buildCard(context, state.results);
-                    } else if (state is CharsStateError) {
-                      return Container();
                     } else {
-                      return Container();
+                      return const Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
                     }
                   },
                 ),

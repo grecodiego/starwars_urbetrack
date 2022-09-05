@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:starwars_urbetrack/data/network/dio_exceptions.dart';
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
 import 'package:starwars_urbetrack/screens/Chars/repository/chars_repository.dart';
 part 'chars_event.dart';
@@ -10,19 +12,18 @@ class CharsBloc extends Bloc<CharsEvent, CharsState> {
   int numberPage = 1;
   int totalChars = 40;
 
-  CharsBloc() : super(CharsInitialState()) {
+  CharsBloc() : super(CharsStateLoading()) {
     getChars() async {
+      emit(CharsStateLoading());
       try {
-        emit(CharsStateLoading());
-        final charsList = await _apiRepository.getCharsList(numberPage);
+        final ApiModel charsList =
+            await _apiRepository.getCharsList(numberPage);
         totalChars = charsList.count;
         emit(CharsStateLoaded(charsList.results));
-        if (charsList.error != null) {
-          emit(CharsStateError(charsList.error));
-        }
-      } on NetworkError {
-        emit(const CharsStateError(
-            "Failed to fetch data. is your device online?"));
+      } on DioError catch (e) {
+        final errorMessage = DioExceptions.fromDioError(e).toString();
+
+        emit(CharsStateError(errorMessage));
       }
     }
 

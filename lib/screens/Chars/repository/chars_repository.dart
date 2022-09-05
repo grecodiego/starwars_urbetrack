@@ -11,5 +11,3 @@ class CharsRepository {
     return charsList;
   }
 }
-
-class NetworkError extends Error {}

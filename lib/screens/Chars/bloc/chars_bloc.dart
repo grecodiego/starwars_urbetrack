@@ -22,7 +22,6 @@ class CharsBloc extends Bloc<CharsEvent, CharsState> {
         emit(CharsStateLoaded(charsList.results));
       } on DioError catch (e) {
         final errorMessage = DioExceptions.fromDioError(e).toString();
-
         emit(CharsStateError(errorMessage));
       }
     }

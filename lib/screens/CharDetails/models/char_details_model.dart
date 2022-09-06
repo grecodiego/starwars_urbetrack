@@ -3,6 +3,6 @@ import 'package:starwars_urbetrack/screens/CharDetails/models/vehicles_model.dar
 
 class CharDetails {
   String charWorldName = '';
-  List<StarshipModel> charStarships = [];
-  List<VehiclesModel> charVehicles = [];
+  List<String> charStarships = [];
+  List<String> charVehicles = [];
 }

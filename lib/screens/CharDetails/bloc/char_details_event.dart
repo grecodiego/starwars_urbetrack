@@ -6,6 +6,5 @@ abstract class CharDetailsEvent {
 
 class GetCharDetails extends CharDetailsEvent {
   Results charData;
-
   GetCharDetails(this.charData);
 }

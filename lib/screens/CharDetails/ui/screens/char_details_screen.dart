@@ -71,7 +71,31 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                   _informationText('Weight', widget.charData.mass),
                   BlocBuilder<CharDetailsBloc, CharDetailsState>(
                       builder: (context, state) {
-                    if (state is CharDetailsStateLoading) {
+                    if (state is CharDetailsStateError) {
+                      return Center(
+                          child: Column(
+                        children: [
+                          const Text(
+                            'THE REMAINING INFORMATION COULD NOT BE OBTAINED, THE PROBLEM MAY BE DUE TO:',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            '${state.message}',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              BlocProvider.of<CharDetailsBloc>(context)
+                                  .add(GetCharDetails(widget.charData));
+                            },
+                            child: const Text('Reload'),
+                          ),
+                        ],
+                      ));
+                    } else if (state is CharDetailsStateLoading) {
                       return _buildLoading();
                     } else if (state is CharDetailsStateLoaded) {
                       return Column(
@@ -82,10 +106,8 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                               shrinkWrap: true,
                               itemCount: state.charDetails?.charVehicles.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return _informationText(
-                                    'Vehicle N${index + 1}',
-                                    state
-                                        .charDetails?.charVehicles[index].name);
+                                return _informationText('Vehicle N${index + 1}',
+                                    state.charDetails?.charVehicles[index]);
                               }),
                           ListView.builder(
                               shrinkWrap: true,
@@ -94,14 +116,9 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                               itemBuilder: (BuildContext context, int index) {
                                 return _informationText(
                                     'Starship N${index + 1}',
-                                    state.charDetails?.charStarships[index]
-                                        .name);
+                                    state.charDetails?.charStarships[index]);
                               }),
                         ],
-                      );
-                    } else if (state is CharDetailsStateError) {
-                      return Center(
-                        child: Text('${state.message}'),
                       );
                     } else {
                       return const Center(

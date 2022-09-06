@@ -1,10 +1,7 @@
 part of 'chars_bloc.dart';
 
-abstract class CharsEvent extends Equatable {
+abstract class CharsEvent {
   const CharsEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class GetCharsList extends CharsEvent {}

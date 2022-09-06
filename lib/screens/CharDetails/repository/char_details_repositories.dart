@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:starwars_urbetrack/screens/CharDetails/models/char_details_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/planet_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/starship_model.dart';
 import 'package:starwars_urbetrack/screens/CharDetails/models/vehicles_model.dart';
@@ -6,46 +7,39 @@ import 'package:starwars_urbetrack/screens/CharDetails/repository/char_details_a
 import 'package:starwars_urbetrack/screens/Chars/model/chars_model.dart';
 
 class DetailsApiRepository {
-  final PlanetApi planetAPI = PlanetApi();
-  final StarshipsAPI starshipAPI = StarshipsAPI();
-  final VehiclesAPI vehicleAPI = VehiclesAPI();
+  final DetailsAPi detailsApi = DetailsAPi();
 
   // ----------------------- GET -----------------------
 
-  Future<PlanetModel> getCharPlanet(Results charData) async {
-    final Response rawPlanet = await planetAPI.getRawPlanet(charData.homeworld);
+  Future getCharDetails(Results charData) async {
+    CharDetails charDetails = CharDetails();
 
-    final PlanetModel charPlanet = PlanetModel.fromJson(rawPlanet.data);
-
-    return charPlanet;
-  }
-
-  Future<List<StarshipModel>> getCharStarhips(
-      List<String> arrayStarShips) async {
-    List<StarshipModel> charStarshipList = [];
-    for (int i = 0; i < arrayStarShips.length; i++) {
-      final Response rawStarship =
-          await starshipAPI.getRawStarships(arrayStarShips[i]);
-      final StarshipModel charStarship =
-          StarshipModel.fromJson(rawStarship.data);
-
-      charStarshipList.add(charStarship);
+    if (charData.homeworld != '') {
+      final Response rawPlanet = await detailsApi.getRaw(charData.homeworld);
+      final PlanetModel charPlanet = PlanetModel.fromJson(rawPlanet.data);
+      charDetails.charWorldName = charPlanet.name!;
     }
-    return charStarshipList;
-  }
 
-  Future<List<VehiclesModel>> getCharVehicles(
-      List<String> arrayVehicles) async {
-    List<VehiclesModel> charVehiclesList = [];
-    for (int i = 0; i < arrayVehicles.length; i++) {
-      final Response rawStarship =
-          await vehicleAPI.getRawVehicles(arrayVehicles[i]);
-      final VehiclesModel charVehicles =
-          VehiclesModel.fromJson(rawStarship.data);
-
-      charVehiclesList.add(charVehicles);
+    if (charData.starships.isNotEmpty) {
+      for (int i = 0; i < charData.starships.length; i++) {
+        final Response rawStarship =
+            await detailsApi.getRaw(charData.starships[i]);
+        final StarshipModel charStarship =
+            StarshipModel.fromJson(rawStarship.data);
+        charDetails.charStarships.add(charStarship.name);
+      }
     }
-    return charVehiclesList;
+
+    if (charData.vehicles.isNotEmpty) {
+      for (int i = 0; i < charData.vehicles.length; i++) {
+        final Response rawVehicles =
+            await detailsApi.getRaw(charData.vehicles[i]);
+        final VehiclesModel charVehicles =
+            VehiclesModel.fromJson(rawVehicles.data);
+        charDetails.charVehicles.add(charVehicles.name);
+      }
+    }
+    return charDetails;
   }
 }
 

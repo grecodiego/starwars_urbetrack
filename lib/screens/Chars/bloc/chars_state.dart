@@ -7,8 +7,6 @@ abstract class CharsState extends Equatable {
   List<Object?> get props => [];
 }
 
-class CharsInitialState extends CharsState {}
-
 class CharsStateLoading extends CharsState {}
 
 class CharsStateLoaded extends CharsState {
@@ -18,5 +16,5 @@ class CharsStateLoaded extends CharsState {
 
 class CharsStateError extends CharsState {
   final String? message;
-  const CharsStateError(this.message);
+  const CharsStateError(String this.message);
 }

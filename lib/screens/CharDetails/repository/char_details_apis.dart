@@ -1,41 +1,26 @@
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 
-class PlanetApi {
-  final Dio _dio = Dio();
+class DetailsAPi {
+  final Dio _dio = Dio(BaseOptions(
+    connectTimeout: 20000,
+    receiveTimeout: 20000,
+  ));
 
-  Future<Response> getRawPlanet(String planetURL) async {
-    try {
-      Response rawPlanet = await _dio.get(planetURL);
-      return rawPlanet;
-    } catch (error, stacktrace) {
-      throw ('Data not found $error, stackTrace $stacktrace');
-    }
-  }
-}
+  Future<Response> getRaw(String url) async {
+    Response raw = await _dio.get(url, options: Options(method: 'GET'));
 
-class StarshipsAPI {
-  final Dio _dio = Dio();
-
-  Future<Response> getRawStarships(String starshipURL) async {
-    try {
-      Response rawStarships = await _dio.get(starshipURL);
-      return rawStarships;
-    } catch (error, stacktrace) {
-      throw ('Data not found $error, stackTrace $stacktrace');
-    }
-  }
-}
-
-class VehiclesAPI {
-  final Dio _dio = Dio();
-
-  Future<Response> getRawVehicles(String vehicleURL) async {
-    try {
-      Response rawVehicles = await _dio.get(vehicleURL);
-      return rawVehicles;
-    } catch (error, stacktrace) {
-      throw ('Data not found $error, stackTrace $stacktrace');
-    }
+    _dio.interceptors.add(RetryInterceptor(
+      dio: _dio,
+      logPrint: print,
+      retries: 3,
+      retryDelays: const [
+        Duration(seconds: 1),
+        Duration(seconds: 5),
+        Duration(seconds: 10),
+      ],
+    ));
+    return raw;
   }
 }
 
@@ -44,14 +29,7 @@ class ReportAPI {
 
   Future<Response> postReport(
       {required String reportURL, required Map data}) async {
-    try {
-      Response rawReport = await _dio.post(reportURL, data: data);
-
-      return rawReport;
-    } catch (error, stacktrace) {
-      throw ('Data not found $error, stackTrace $stacktrace');
-    }
+    Response rawReport = await _dio.post(reportURL, data: data);
+    return rawReport;
   }
 }
-
-class NetworkError extends Error {}

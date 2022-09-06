@@ -15,8 +15,7 @@ class DetailsApiRepository {
     CharDetails charDetails = CharDetails();
 
     if (charData.homeworld != '') {
-      final Response rawPlanet =
-          await detailsApi.getRawPlanet(charData.homeworld);
+      final Response rawPlanet = await detailsApi.getRaw(charData.homeworld);
       final PlanetModel charPlanet = PlanetModel.fromJson(rawPlanet.data);
       charDetails.charWorldName = charPlanet.name!;
     }
@@ -24,7 +23,7 @@ class DetailsApiRepository {
     if (charData.starships.isNotEmpty) {
       for (int i = 0; i < charData.starships.length; i++) {
         final Response rawStarship =
-            await detailsApi.getRawStarships(charData.starships[i]);
+            await detailsApi.getRaw(charData.starships[i]);
         final StarshipModel charStarship =
             StarshipModel.fromJson(rawStarship.data);
         charDetails.charStarships.add(charStarship.name);
@@ -34,7 +33,7 @@ class DetailsApiRepository {
     if (charData.vehicles.isNotEmpty) {
       for (int i = 0; i < charData.vehicles.length; i++) {
         final Response rawVehicles =
-            await detailsApi.getRawVehicles(charData.vehicles[i]);
+            await detailsApi.getRaw(charData.vehicles[i]);
         final VehiclesModel charVehicles =
             VehiclesModel.fromJson(rawVehicles.data);
         charDetails.charVehicles.add(charVehicles.name);

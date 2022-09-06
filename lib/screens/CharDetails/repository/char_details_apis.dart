@@ -1,21 +1,26 @@
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 
 class DetailsAPi {
-  final Dio _dio = Dio();
+  final Dio _dio = Dio(BaseOptions(
+    connectTimeout: 20000,
+    receiveTimeout: 20000,
+  ));
 
-  Future<Response> getRawPlanet(String planetURL) async {
-    Response rawPlanet = await _dio.get(planetURL);
-    return rawPlanet;
-  }
+  Future<Response> getRaw(String url) async {
+    Response raw = await _dio.get(url, options: Options(method: 'GET'));
 
-  Future<Response> getRawStarships(String starshipURL) async {
-    Response rawStarships = await _dio.get(starshipURL);
-    return rawStarships;
-  }
-
-  Future<Response> getRawVehicles(String vehicleURL) async {
-    Response rawVehicles = await _dio.get(vehicleURL);
-    return rawVehicles;
+    _dio.interceptors.add(RetryInterceptor(
+      dio: _dio,
+      logPrint: print,
+      retries: 3,
+      retryDelays: const [
+        Duration(seconds: 1),
+        Duration(seconds: 5),
+        Duration(seconds: 10),
+      ],
+    ));
+    return raw;
   }
 }
 
@@ -28,5 +33,3 @@ class ReportAPI {
     return rawReport;
   }
 }
-
-class NetworkError extends Error {}

@@ -11,26 +11,19 @@ class CharsApi {
   ));
 
   Future<Response> getRawChars(int numberPage) async {
-    //!No internet connection
-    //throw SocketException('No internet');
-
     Response rawChars = await _dio.request(numberPage.toString(),
         options: Options(method: 'GET'));
 
     _dio.interceptors.add(RetryInterceptor(
       dio: _dio,
-      logPrint: print, // specify log function (optional)
-      retries: 3, // retry count (optional)
+      logPrint: print,
+      retries: 3,
       retryDelays: const [
-        // set delays between retries (optional)
-        Duration(seconds: 1), // wait 1 sec before first retry
-        Duration(seconds: 5), // wait 2 sec before second retry
-        Duration(seconds: 10), // wait 3 sec before third retry
+        Duration(seconds: 1),
+        Duration(seconds: 5),
+        Duration(seconds: 10),
       ],
     ));
-
-    /// Sending a failing request for 3 times with 1s, then 2s, then 3s interval
-    //await _dio.request(numberPage.toString());
 
     return rawChars;
   }

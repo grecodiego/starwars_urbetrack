@@ -13,7 +13,6 @@ class DetailsApiRepository {
 
   Future getCharDetails(Results charData) async {
     CharDetails charDetails = CharDetails();
-
     if (charData.homeworld != '') {
       final Response rawPlanet = await detailsApi.getRaw(charData.homeworld);
       final PlanetModel charPlanet = PlanetModel.fromJson(rawPlanet.data);
@@ -46,7 +45,6 @@ class DetailsApiRepository {
 // ----------------------- POST -----------------------
 
 class ReportRepository {
-  final Dio _dio = Dio();
   final ReportAPI reportAPI = ReportAPI();
 
   final dateNow = DateTime.now();

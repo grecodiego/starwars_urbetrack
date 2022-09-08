@@ -8,7 +8,6 @@ class CharsRepository {
   Future<ApiModel> getCharsList(int numberPage) async {
     Response rawChars = await charsApi.getRawChars(numberPage);
     final ApiModel charsList = ApiModel.fromJson(rawChars.data);
-    print(charsList);
     return charsList;
   }
 }
